@@ -1,0 +1,41 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Category{% endblock title %}
+
+{% block banner-slider %}
+  <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'store/images/banner/b1.jpg' %}" class="d-block w-100" alt="banner image">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'store/images/banner/b2.jpg' %}" class="d-block w-100" alt="banner image">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'store/images/banner/b3.jpg' %}" class="d-block w-100" alt="banner image">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'store/images/banner/b4.jpg' %}" class="d-block w-100" alt="banner image">
+      </div> 
+    </div>
+  </div>
+{% endblock banner-slider %}
+{% block main-content %}
+<div class="container mt-3">
+    <br>
+    <h2 class="text-center">About Us</h2>
+    <br>
+    <div class="row container">
+        <p class="fs-4 text-center">This is a pulic limited company having its registered and corporate office at pune city of Maharashtra State in India. The company was incorporated in the year 2018 and production commenced in 2020. This is one of the fastest growing Public Listed Companies in Pune.</p>
+    </div>
+
+    <br>
+    <h2 class="text-center">Mission</h2>
+    <br>
+    <div class="row container">
+        <p class="fs-4 text-center">To embrace the right technology to delight our customers Empowerig the farmer community through our unique 'Relationship Farming' Model. To anticipate, understand and respond to our Customers needs by creating high-quality products and making the available through innovative and conveninent channels</p>
+    </div>
+</div>
+<br><br>
+{% endblock main-content  %}
