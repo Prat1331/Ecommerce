@@ -96,6 +96,7 @@ def add_to_cart(request):
     product_id=request.GET.get('prod_id')    
     product = Product.objects.get(id=product_id)
     Cart(user=user,product=product).save()
+    return redirect("/cart")
           
 def show_cart(request):
     user = request.user
