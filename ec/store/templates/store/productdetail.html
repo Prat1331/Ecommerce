@@ -17,8 +17,8 @@
                 <br><br><h4>Product Features</h4>
                 <ul class="fs-5" style="font-family: Rajdhani;">
                     <li>{{product.description}}</li>
-                    <li>{{product.composition}}</li>
-                    <li>{{product.prodapp}}</li>
+                    <li>Composition :{{product.composition}}</li>
+                    <li>Use : {{product.prodapp}}</li>
                 </ul>                  
                     <form action="/add-to-cart" class="d-inline">
                         <input type="hidden" name="prod_id" value={{product.id}} />

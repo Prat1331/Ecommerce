@@ -101,4 +101,10 @@ def add_to_cart(request):
 def show_cart(request):
     user = request.user
     cart = Cart.objects.filter(user=user)
-    return render(request, 'app/addtocart.html',locals())          
+    amount = 0
+    for p in cart:
+        value = p.quantity * p.product.discounted_price
+        amount = amount + value
+    totalamount = amount + 40    
+    
+    return render(request, 'store/addtocart.html',locals())          
