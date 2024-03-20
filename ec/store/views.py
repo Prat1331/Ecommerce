@@ -122,7 +122,7 @@ class checkout(View):
             value = p.quantity * p.product.discounted_price
             famount = famount + value
         totalamount = famount + 40
-        razoramount = int(totalamount * 100)
+        razoramount = int(totalamount*100)
         client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
         data = {"amount": razoramount, "currency": "INR", "receipt": "order_rcptid_12"}
         payment_response = client.order.create(data=data)
@@ -147,7 +147,7 @@ def payment_done(request):
     #print("payment_done: oid",order_id," pid", payment_id," cid", cust_id)
     user=request.user 
     #return redirect("orders")
-    customer=Customer.objects.get(id-cust_id)
+    customer=Customer.objects.get(id=cust_id)
     #To update payment status and payment id.
     payment = Payment.objects.get(razorpay_order_id=order_id)
     payment.paid = True
@@ -160,7 +160,10 @@ def payment_done(request):
         c.delete()
         
         return redirect("orders")        
-            
+
+def orders(request):
+    order_placed=OrderPlaced.objects.filter(user=request.user)            
+    return render(request, 'store/orders.html',locals())
 
 def plus_cart(request):
     if request.method == 'GET':
