@@ -2,10 +2,12 @@ from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from . models import Cart, Customer, Product
+import razorpay
+from . models import Cart, Customer, OrderPlaced, Payment, Product
 from . forms import CustomerRegistrationForm, CustomerProfileForm
 from django.contrib import messages
 from django.db.models import Q
+from django.conf import settings
 
 def home(request):
     return render(request,"store/home.html")
@@ -120,7 +122,44 @@ class checkout(View):
             value = p.quantity * p.product.discounted_price
             famount = famount + value
         totalamount = famount + 40
+        razoramount = int(totalamount * 100)
+        client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+        data = {"amount": razoramount, "currency": "INR", "receipt": "order_rcptid_12"}
+        payment_response = client.order.create(data=data)
+        print(payment_response)
+        
+        order_id = payment_response['id']
+        order_status = payment_response['status']
+        if order_status == 'created':
+            payment = Payment(
+                user=user,
+                amount=totalamount,
+                razorpay_order_id=order_id,
+                razorpay_payment_status = order_status
+            )
+            payment.save()
         return render(request, 'store/checkout.html',locals())
+
+def payment_done(request):
+    order_id=request.GET.get('order_id')
+    payment_id=request.GET.get('payment_id')
+    cust_id=request.GET.get('cust_id')
+    #print("payment_done: oid",order_id," pid", payment_id," cid", cust_id)
+    user=request.user 
+    #return redirect("orders")
+    customer=Customer.objects.get(id-cust_id)
+    #To update payment status and payment id.
+    payment = Payment.objects.get(razorpay_order_id=order_id)
+    payment.paid = True
+    payment.razorpay_payment_id = payment_id
+    payment.save()
+    #To save order details 
+    cart=Cart.objects.filter(user-user)
+    for c in cart:
+        OrderPlaced(user=user, customer=customer, product=c.product, quantity=c.quantity, payment=payment).save()
+        c.delete()
+        
+        return redirect("orders")        
             
 
 def plus_cart(request):

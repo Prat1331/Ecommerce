@@ -140,3 +140,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+RAZOR_KEY_ID = "rzp_test_QFJvkwLZFGBhFC"
+RAZOR_KEY_SECRET = "TnTYrFsniZqwGssBcDhx02i3"

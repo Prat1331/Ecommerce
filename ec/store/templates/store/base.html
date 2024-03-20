@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static  'store/css/owl.carousel.min.css' %}" />
     <link rel="stylesheet" href="{% static  'store/css/all.min.css' %}" />
     <link rel="stylesheet" href="{% static  'store/css/style.css' %}" />
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <title> Dairy Products | {% block title %}{% endblock title %}</title>
 
@@ -72,7 +73,7 @@
         
             </li>
             <li class="nav-item mx-2">
-              <a href="#" class="nav-link text-white">Cart 4</a>
+              <a href="{% url 'showcart' %}" class="nav-link text-white">Cart 4</a>
             </li>
             <li class="nav-item mx-2">
               <a href="#" class="nav-link text-white">Wishlist 4</a>
@@ -94,6 +95,7 @@
       {% block banner-slider %}{% endblock banner-slider %}
       {% block information %}{% endblock information %}
       {% block main-content %}{% endblock main-content %}
+      {% block payment-gateway %}{% endblock payment-gateway %}
       
         
 
