@@ -73,7 +73,7 @@
         
             </li>
             <li class="nav-item mx-2">
-              <a href="{% url 'showcart' %}" class="nav-link text-white">Cart 4</a>
+              <a href="{% url 'showcart' %}" class="nav-link text-white"><span vlass="badge bg-danger">{% if totalitem > 0 %} {{totalitem}} {% endif %}</span>Cart 4</a>
             </li>
             <li class="nav-item mx-2">
               <a href="#" class="nav-link text-white">Wishlist 4</a>

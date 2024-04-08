@@ -154,12 +154,11 @@ def payment_done(request):
     payment.razorpay_payment_id = payment_id
     payment.save()
     #To save order details 
-    cart=Cart.objects.filter(user-user)
+    cart=Cart.objects.filter(user=user)
     for c in cart:
         OrderPlaced(user=user, customer=customer, product=c.product, quantity=c.quantity, payment=payment).save()
         c.delete()
-        
-        return redirect("orders")        
+    return redirect("orders")        
 
 def orders(request):
     order_placed=OrderPlaced.objects.filter(user=request.user)            
