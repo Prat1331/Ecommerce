@@ -10,13 +10,22 @@ from django.db.models import Q
 from django.conf import settings
 
 def home(request):
-    return render(request,"store/home.html")
+    totalitem = 0
+    if request.user.is_authenticated:
+        totalitem = len(Cart.objects.filter(user=request.user))
+    return render(request,"store/home.html",locals())
 
 def about(request):
-    return render(request,"store/about.html")
+    totalitem = 0
+    if request.user.is_authenticated:
+        totalitem = len(Cart.objects.filter(user=request.user))
+    return render(request,"store/about.html",locals())
 
 def contact(request):
-    return render(request,"store/contact.html")    
+    totalitem = 0
+    if request.user.is_authenticated:
+        totalitem = len(Cart.objects.filter(user=request.user))
+    return render(request,"store/contact.html",locals())    
 
 class CategoryView(View):
     def get(self,request,val):
@@ -78,6 +87,9 @@ class updateAddress(View):
     def get(self,request,pk):
         add = Customer.objects.get(pk=pk)
         form = CustomerProfileForm(instance = add)
+        totalitem = 0
+        if request.user.is_authenticated:
+            totalitem = len(Cart.objects.filter(user=request.user))
         return render(request, 'store/updateAddress.html',locals())
     def post(self,request,pk):
         form = CustomerProfileForm(request.POST)
@@ -109,11 +121,17 @@ def show_cart(request):
     for p in cart:
         value = p.quantity * p.product.discounted_price
         amount = amount + value
-    totalamount = amount + 40    
+    totalamount = amount + 40
+    totalitem = 0
+    if request.user.is_authenticated:
+        totalitem = len(Cart.objects.filter(user=request.user))    
     return render(request, 'store/addtocart.html',locals())          
 
 class checkout(View):
     def get(self,request):
+        totalitem = 0
+        if request.user.is_authenticated:
+            totalitem = len(Cart.objects.filter(user=request.user))
         user=request.user
         add=Customer.objects.filter(user=user)
         cart_items=Cart.objects.filter(user=user)
@@ -161,6 +179,9 @@ def payment_done(request):
     return redirect("orders")        
 
 def orders(request):
+    totalitem = 0
+    if request.user.is_authenticated:
+        totalitem = len(Cart.objects.filter(user=request.user))
     order_placed=OrderPlaced.objects.filter(user=request.user)            
     return render(request, 'store/orders.html',locals())
 
